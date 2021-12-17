@@ -8,82 +8,156 @@
   <title>LUT Maker</title>
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <link rel="stylesheet" href="assets/style.css">
-  <script src="https://kit.fontawesome.com/2fc07cb02e.js" crossorigin="anonymous"></script>
+
+  <style>
+    html,
+    body {
+      height: 100%;
+    }
+
+    #c {
+      width: 800px;
+      height: 450px;
+      border: 1px solid #DDD;
+    }
+
+    label {
+      display: block;
+    }
+
+    .pad {
+      padding: 20px;
+    }
+
+    .brdr {
+      border-left: 1px solid #DDD;
+      background-color: white;
+    }
+  </style>
 </head>
 
 <body>
 
-  <div class="preview pad">
-
-    <div id="wrap">
-      <img src="img/preview-image.jpg" class="img-fluid" id="preview-img" />
+  <div class="row no-gutters h-100">
+    <div class="col-md-9 h-100">
+      <div class="pad">
+        <canvas id="c" width="800" height="450"></canvas>
+      </div>
     </div>
-    <div id="main-preview"></div>
+    <div class="col-md-3 brdr h-100">
+
+      <div class="pad">
+
+        <label for="brightness">Brightness</label>
+        <input type="range" id="brightness" value="0" min="-1" max="1" step="0.01">
+
+        <label for="contrast">Contrast</label>
+        <input type="range" id="contrast" value="0" min="-1" max="1" step="0.01">
+
+        <label for="saturation">Saturation</label>
+        <input type="range" id="saturation" value="0" min="-1" max="1" step="0.01">
+
+        <label for="hue-value">Hue</label>
+        <input type="range" id="hue" value="0" min="-2" max="2" step="0.01">
+
+      </div>
+
+    </div>
   </div>
 
-  <div class="debug">
-    <div id="debug-canvas">
-      <img src="img/Neutral_25.png" id="image" /><br>
-      <canvas id="hald" width="125" height="125"></canvas><br>
-      <canvas id="export" width="125" height="125" style="border: 1px solid red;"></canvas>
-    </div>
-  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/451/fabric.min.js"></script>
 
-  <div class="controls">
+  <script>
+    const canvas = new fabric.Canvas("c");
+    const filters = {};
 
-    <input type="file" id="fileInput" class="fileInput" accept="image/*" style="display: none;" />
-    <button class="btn btn-outline-secondary mb-4 w-100" onclick="choose()"><i class="fas fa-upload"></i> Upload Image</button>
+    init()
+    async function init() {
 
+      /*
+      const [width, height] = [window.innerWidth, window.innerHeight / 2];
 
-    <div class="control">
-      <label for="input-brightness">Exposure</label>
-      <div class="slider">
-        <input type="range" min="-1" max="1" step="0.01" value="0" id="input-brightness">
-      </div>
-    </div>
+      // Setting the canvas size
+      canvas.setWidth(width);
+      canvas.setHeight(height);
+      canvas.calcOffset();
+      */
 
-    <div class="control">
-      <label for="input-contrast">Contrast</label>
-      <div class="slider">
-        <input type="range" min="-1" max="1" step="0.01" value="0" id="input-contrast">
-      </div>
-    </div>
+      // load the image
+      const img = new Image();
+      img.crossOrigin = "";
+      await new Promise(res => {
+        img.onload = res;
+        img.src = `img/preview-image.jpg`;
+      });
+      const image = new fabric.Image(img).scaleToWidth(800, false);
+      canvas.add(image)
 
+      // Create and register the filters in `filters` object
+      const filters = {
+        brightness: new fabric.Image.filters.Brightness(),
+        saturation: new fabric.Image.filters.Saturation(),
+        contrast: new fabric.Image.filters.Contrast(),
+        hue: new fabric.Image.filters.HueRotation(),
+      }
 
+      // - Brightness
+      // Attach the filter to the image
+      image.filters.push(filters.brightness);
+      const brightnessInput = document.querySelector("#brightness")
+      brightnessInput.oninput = () => {
+        const value = parseFloat(brightnessInput.value);
+        // Edit the filter value
+        filters.brightness.brightness = value;
+        // Apply the changes
+        image.applyFilters();
+        // Display the result
+        canvas.renderAll();
+      }
 
-    <div class="control">
-      <label for="input-saturation">Saturation</label>
-      <div class="slider">
-        <input type="range" min="-1" max="1" step="0.01" value="0" id="input-saturation">
-      </div>
-    </div>
+      // - Contrast
+      // Attach the filter to the image
+      image.filters.push(filters.contrast);
+      const contrastInput = document.querySelector("#contrast")
+      contrastInput.oninput = () => {
+        const value = parseFloat(contrastInput.value);
+        // Edit the filter value
+        filters.contrast.contrast = value;
+        // Apply the changes
+        image.applyFilters();
+        // Display the result
+        canvas.renderAll();
+      }
 
-    <div class="control">
-      <label for="input-vibrance">Vibrance</label>
-      <div class="slider">
-        <input type="range" min="-1" max="1" step="0.01" value="0" id="input-vibrance">
-      </div>
-    </div>
+      // - Saturation
+      // Attach the filter to the image
+      image.filters.push(filters.saturation);
+      const saturationInput = document.querySelector("#saturation")
+      saturationInput.oninput = () => {
+        const value = parseFloat(saturationInput.value);
+        // Edit the filter value
+        filters.saturation.saturation = value;
+        // Apply the changes
+        image.applyFilters();
+        // Display the result
+        canvas.renderAll();
+      }
 
-    <div class="control">
-      <label for="input-hue">Hue Rotate</label>
-      <div class="slider">
-        <input type="range" min="-1" max="1" step="0.01" value="0" id="input-hue">
-      </div>
-    </div>
-
-    <button class="btn btn-primary w-100 mt-2" onclick="generateCube()">
-      <i class="fas fa-download"></i> Download LUT
-    </button>
-
-  </div>
-
-  <script src="js/lut-export.js"></script>
-  <script src="js/glfx.js"></script>
-  <script src="js/script.js"></script>
-
-
+      // - Hue
+      // Attach the filter to the image
+      image.filters.push(filters.hue);
+      const hueInput = document.querySelector("#hue")
+      hueInput.oninput = () => {
+        const value = parseFloat(hueInput.value);
+        // Edit the filter value
+        filters.hue.rotation = value;
+        // Apply the changes
+        image.applyFilters();
+        // Display the result
+        canvas.renderAll();
+      }
+    }
+  </script>
 
 </body>
 
