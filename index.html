@@ -30,19 +30,36 @@
   <div class="controls">
 
     <input type="file" id="fileInput" class="fileInput" accept="image/*" style="display: none;" />
-    <button class="btn btn-outline-secondary mb-4 w-100" onclick="choose()">Upload Image</button>
+    <button class="btn btn-outline-secondary mb-4 w-100" onclick="choose()"><i class="fas fa-upload"></i> Upload Image</button>
 
-    <label for="input-brightness">Exposure</label>
-    <input type="range" min="0" max="200" step="1" value="100" id="input-brightness">
 
-    <label for="input-contrast">Contrast</label>
-    <input type="range" min="50" max="250" step="1" value="100" id="input-contrast">
+    <div class="control">
+      <label for="input-brightness">Exposure</label>
+      <div class="slider">
+        <input type="range" min="0" max="200" step="1" value="100" id="input-brightness">
+      </div>
+    </div>
 
-    <label for="input-hue">Hue Rotate</label>
-    <input type="range" min="0" max="360" step="1" value="0" id="input-hue">
+    <div class="control">
+      <label for="input-contrast">Contrast</label>
+      <div class="slider">
+        <input type="range" min="50" max="250" step="1" value="100" id="input-contrast">
+      </div>
+    </div>
 
-    <label for="input-saturation">Saturation</label>
-    <input type="range" min="0" max="200" step="1" value="100" id="input-saturation">
+    <div class="control">
+      <label for="input-hue">Hue Rotate</label>
+      <div class="slider">
+        <input type="range" min="0" max="360" step="1" value="0" id="input-hue">
+      </div>
+    </div>
+
+    <div class="control">
+      <label for="input-saturation">Saturation</label>
+      <div class="slider">
+        <input type="range" min="0" max="200" step="1" value="100" id="input-saturation">
+      </div>
+    </div>
 
     <button class="btn btn-primary w-100 mt-2" onclick="generateCube()">
       <i class="fas fa-download"></i> Download LUT

@@ -100,6 +100,9 @@ document.getElementById('fileInput').addEventListener('change', function(e) {
     var base64Image = canvas.toDataURL('image/jpeg')
     // console.log(base64Image);
     document.querySelector('#preview-img').src = base64Image;
+    setTimeout(function() {
+      filter();
+    }, 50);
 
   }
   img.src = URL.createObjectURL(e.target.files[0]);

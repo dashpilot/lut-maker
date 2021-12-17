@@ -4,7 +4,7 @@ body {
 }
 
 body {
-  background-color: #F8F8F8;
+  background-color: #282C31;
 }
 
 .pad {
@@ -13,37 +13,46 @@ body {
 
 label {
   display: block;
-  font-weight: bold;
   margin-bottom: 0.25rem;
+  font-size: 15px !important;
 }
 
 #hald {
   border: 1px solid red;
 }
 
+.preview {
+  width: calc(100% - 530px);
+  margin: 0 auto;
+}
+
 .controls,
 .debug {
   position: fixed;
   top: 0;
-  width: 240px;
+  width: 270px;
   padding: 20px;
   background-color: white;
   height: 100%;
+  background-color: #282C31;
 }
 
 .controls {
   left: 0;
-  border-right: 1px solid #DDD;
+}
+.control{
+
+    border-radius: 4px;
+    color: white;
+
+      margin-bottom: 25px;
 }
 
 .debug {
   display: none;
 }
 
-.preview {
-  width: calc(100% - 480px);
-  margin: 0 auto;
-}
+
 
 #preview-img,
 #debug-canvas {
@@ -54,6 +63,50 @@ label {
   padding-right: 5px;
 }
 
-input[type="range"] {
-  margin-bottom: 15px;
+.btn-outline-secondary{
+  background: #46474E;
+  border: none;
+}
+
+input[type=range] {
+  -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+  width: 100%; /* Specific width is required for Firefox. */
+  background: transparent; /* Otherwise white in Chrome */
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
+
+input[type=range]:focus {
+  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+/* thumb */
+input[type=range]::-moz-range-thumb {
+    -webkit-appearance: none;
+  border: 0;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #46474E;
+  cursor: pointer;
+  display: block;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+border: 0;
+height: 20px;
+width: 20px;
+border-radius: 50%;
+background: #46474E;
+cursor: pointer;
+display: block;
+}
+
+.slider{
+    border-radius: 20px;
+    height: 22px;
+    background-color: #0C0E19;
 }
