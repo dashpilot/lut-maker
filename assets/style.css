@@ -1,0 +1,59 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: #F8F8F8;
+}
+
+.pad {
+  padding: 20px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+#hald {
+  border: 1px solid red;
+}
+
+.controls,
+.debug {
+  position: fixed;
+  top: 0;
+  width: 240px;
+  padding: 20px;
+  background-color: white;
+  height: 100%;
+}
+
+.controls {
+  left: 0;
+  border-right: 1px solid #DDD;
+}
+
+.debug {
+  display: none;
+}
+
+.preview {
+  width: calc(100% - 480px);
+  margin: 0 auto;
+}
+
+#preview-img,
+#debug-canvas {
+  opacity: 0;
+}
+
+.fas {
+  padding-right: 5px;
+}
+
+input[type="range"] {
+  margin-bottom: 15px;
+}
