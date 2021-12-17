@@ -15,8 +15,11 @@
 <body>
 
   <div class="preview pad">
-    <canvas id="preview-canvas"></canvas>
-    <img src="img/preview-image.jpg" class="img-fluid" id="preview-img" />
+
+    <div id="wrap">
+      <img src="img/preview-image.jpg" class="img-fluid" id="preview-img" />
+    </div>
+    <div id="main-preview"></div>
   </div>
 
   <div class="debug">
@@ -36,28 +39,37 @@
     <div class="control">
       <label for="input-brightness">Exposure</label>
       <div class="slider">
-        <input type="range" min="0" max="200" step="1" value="100" id="input-brightness">
+        <input type="range" min="-1" max="1" step="0.01" value="0" id="input-brightness">
       </div>
     </div>
 
     <div class="control">
       <label for="input-contrast">Contrast</label>
       <div class="slider">
-        <input type="range" min="50" max="250" step="1" value="100" id="input-contrast">
+        <input type="range" min="-1" max="1" step="0.01" value="0" id="input-contrast">
+      </div>
+    </div>
+
+
+
+    <div class="control">
+      <label for="input-saturation">Saturation</label>
+      <div class="slider">
+        <input type="range" min="-1" max="1" step="0.01" value="0" id="input-saturation">
+      </div>
+    </div>
+
+    <div class="control">
+      <label for="input-vibrance">Vibrance</label>
+      <div class="slider">
+        <input type="range" min="-1" max="1" step="0.01" value="0" id="input-vibrance">
       </div>
     </div>
 
     <div class="control">
       <label for="input-hue">Hue Rotate</label>
       <div class="slider">
-        <input type="range" min="0" max="360" step="1" value="0" id="input-hue">
-      </div>
-    </div>
-
-    <div class="control">
-      <label for="input-saturation">Saturation</label>
-      <div class="slider">
-        <input type="range" min="0" max="200" step="1" value="100" id="input-saturation">
+        <input type="range" min="-1" max="1" step="0.01" value="0" id="input-hue">
       </div>
     </div>
 
@@ -67,8 +79,9 @@
 
   </div>
 
-  <script src="lut-export.js"></script>
-  <script src="script.js"></script>
+  <script src="js/lut-export.js"></script>
+  <script src="js/glfx.js"></script>
+  <script src="js/script.js"></script>
 
 
 

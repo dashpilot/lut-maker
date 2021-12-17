@@ -40,6 +40,12 @@ label {
 .controls {
   left: 0;
 }
+
+.debug{
+  right: 0;
+}
+
+
 .control{
 
     border-radius: 4px;
@@ -49,7 +55,7 @@ label {
 }
 
 .debug {
-  display: none;
+  /* display: none; */
 }
 
 

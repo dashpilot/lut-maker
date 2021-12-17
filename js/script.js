@@ -1,3 +1,83 @@
+const previewImg = document.getElementById('preview-img');
+const wrap = document.getElementById('wrap')
+
+/*
+function resize() {
+  previewCanvas.width = previewImg.width;
+  previewCanvas.height = previewImg.height;
+  previewCtx.drawImage(previewImg, 0, 0, previewImg.width, previewImg.height);
+}
+setTimeout(function() {
+  resize();
+}, 100)
+
+window.addEventListener('resize', resize);
+*/
+
+const brightness = document.getElementById('input-brightness');
+const contrast = document.getElementById('input-contrast');
+const hue = document.getElementById('input-hue');
+const saturation = document.getElementById('input-saturation');
+const vibrance = document.getElementById('input-vibrance');
+
+previewImg.onload = function() {
+  try {
+    var canvas = fx.canvas();
+  } catch (e) {
+    alert(e);
+
+  }
+
+  var texture = canvas.texture(previewImg);
+
+
+  document.querySelectorAll('input[type="range"]').forEach(function(e) {
+    e.addEventListener('input', function() {
+
+      // apply the ink filter
+      canvas.draw(texture).brightnessContrast(brightness.value, contrast.value).hueSaturation(hue.value, saturation.value).vibrance(vibrance.value).update();
+
+      // replace the image with the canvas
+      wrap.insertBefore(canvas, previewImg);
+      //wrap.removeChild(previewImg)
+
+    });
+  })
+
+
+}
+
+
+
+
+
+/*
+function filter() {
+
+
+
+  // inputImage may be an Image, or even an HTML Canvas!
+  var filteredImage = filter.apply(previewImg);
+
+  console.log(filteredImage);
+
+  // The 'filteredImage' is a canvas element. You can draw it on a 2D canvas
+  // or just add it to your DOM
+  // mainPreview.innerHTML = filteredImage;
+
+  previewCtx.drawImage(filteredImage, 0, 0);
+
+
+  // Use .reset() to clear the current filter chain. This is faster than creating a new
+  // WebGLImageFilter instance
+  filter.reset();
+
+}
+*/
+
+
+
+/*
 const hald = document.getElementById('hald');
 const ctx = hald.getContext("2d");
 const image = document.getElementById('image');
@@ -17,13 +97,7 @@ preview_img.onload = function() {
   preview_ctx.drawImage(preview_img, 0, 0, preview_img.width, preview_img.height);
 }
 
-function resize() {
-  preview.width = preview_img.width;
-  preview.height = preview_img.height;
-  preview_ctx.drawImage(preview_img, 0, 0, preview_img.width, preview_img.height);
-}
-resize();
-window.addEventListener('resize', resize);
+
 
 const brightness = document.getElementById('input-brightness');
 brightness.addEventListener('input', e => {
@@ -68,9 +142,12 @@ function filter_hald() {
   ctx.drawImage(image, 0, 0);
 }
 
+*/
+
 function choose() {
   document.getElementById('fileInput').click();
 }
+
 
 document.getElementById('fileInput').addEventListener('change', function(e) {
   var width = preview_img.width;
