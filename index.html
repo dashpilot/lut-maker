@@ -83,12 +83,17 @@
   </div>
 
 
-  <div class="pad">
-    <canvas id="c" width="800" height="450"></canvas>
+  <div id="main" class="pad">
+
+    <div id="canvaswrap">
+      <canvas id="c" width="800" height="450"></canvas>
+    </div>
 
     <input type="file" id="fileInput" accept="image/*">
-    <button class="btn btn-outline-secondary" id="choose-image"><span class="icon"><i class="fas fa-image"></i></span> Replace Image</button>
 
+    <div class="image-bar">
+      <button class="btn btn-outline-secondary" id="choose-image"><span class="icon"><i class="fas fa-image"></i></span> Replace Image</button>
+    </div>
 
     <div id="exports">
       <canvas id="hald-canvas" width="125" height="125"></canvas>

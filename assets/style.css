@@ -7,6 +7,16 @@ body {
   height: 100%;
 }
 
+#main{
+  padding-right: 320px;
+}
+
+#canvaswrap{
+  width: 800px;
+  margin: 0 auto;
+}
+
+
 #c {
   width: 800px;
   height: 450px;
@@ -97,6 +107,11 @@ background-color: #43966A;
 
 #fileInput{
   display: none;
+}
+
+
+.image-bar{
+  text-align: center;
 }
 
 /* --- range sliders --- */
