@@ -24,7 +24,7 @@ nav{
 }
 
 #main{
-  padding-right: 320px;
+  padding-right: 360px;
 }
 
 .controls{
@@ -92,8 +92,8 @@ label {
 }
 
 .color{
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
   border: 1.5px solid white;
   border-radius: 50%;
   display: inline-block;
