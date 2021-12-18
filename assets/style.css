@@ -1,5 +1,11 @@
 body {
   background-color: #0C0E18;
+  text-transform: uppercase;
+  font-family: proxima-nova, sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 14px;
+  letter-spacing: 0.03em;
 }
 
 html,
@@ -7,8 +13,35 @@ body {
   height: 100%;
 }
 
+nav{
+  padding: 13px;
+  padding-left: 20px;
+  height: 50px;
+  background-color: #262831;
+  color: white;
+  border-bottom: 1px solid black;
+  font-size: 15px;
+}
+
 #main{
   padding-right: 320px;
+}
+
+.controls{
+    background-color: #262831;
+    color: white;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 320px;
+    z-index: 999;
+    margin-top: 50px;
+}
+
+.control{
+    border-radius: 4px;
+    color: white;
+margin-bottom: 15px;
 }
 
 #canvaswrap{
@@ -45,28 +78,13 @@ label {
 label {
   display: block;
   margin-bottom: 0.25rem;
-  font-size: 15px !important;
 }
 
 #hald {
   border: 1px solid red;
 }
 
-.controls{
-    background-color: #262831;
-    color: white;
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 320px;
-    z-index: 999;
-}
 
-.control{
-    border-radius: 4px;
-    color: white;
-margin-bottom: 15px;
-}
 
 .icon{
   width: 20px;
