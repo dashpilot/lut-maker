@@ -1,5 +1,5 @@
 body {
-  background-color: #282C31;
+  background-color: #0C0E18;
 }
 
 html,
@@ -14,6 +14,9 @@ body {
 
 #exports{
   opacity: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 label {
@@ -40,8 +43,13 @@ label {
 }
 
 .controls{
-    background-color: #282C31;
+    background-color: #262831;
     color: white;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 320px;
+    z-index: 999;
 }
 
 .control{
@@ -50,9 +58,36 @@ label {
 margin-bottom: 15px;
 }
 
+.icon{
+  width: 20px;
+  display: inline-block;
+}
 
-.fas {
-  padding-right: 5px;
+.color{
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid white;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align:sub;
+}
+
+.red{
+background-color: #BB4C41;
+}
+
+.green{
+background-color: #43966A;
+}
+
+.blue{
+  background-color: #2558A3;
+}
+
+.btn{
+  border-radius: 25px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .btn-outline-secondary{
