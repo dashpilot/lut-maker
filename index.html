@@ -9,31 +9,10 @@
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-  <style>
-    html,
-    body {
-      height: 100%;
-    }
 
-    #c {
-      width: 800px;
-      height: 450px;
-      border: 1px solid #DDD;
-    }
+  <link rel="stylesheet" href="assets/style.css">
 
-    label {
-      display: block;
-    }
 
-    .pad {
-      padding: 20px;
-    }
-
-    .brdr {
-      border-left: 1px solid #DDD;
-      background-color: white;
-    }
-  </style>
 </head>
 
 <body>
@@ -44,28 +23,72 @@
         <canvas id="c" width="800" height="450"></canvas>
       </div>
     </div>
-    <div class="col-md-3 brdr h-100">
+    <div class="col-md-3 h-100 controls">
 
       <div class="pad">
 
-        <label for="brightness">Brightness</label>
-        <input type="range" id="brightness" value="0" min="-1" max="1" step="0.01">
+        <div class="control">
+          <label for="brightness">Brightness</label>
+          <div class="slider">
+            <input type="range" id="brightness" value="0" min="-1" max="1" step="0.01">
+          </div>
+        </div>
 
-        <label for="contrast">Contrast</label>
-        <input type="range" id="contrast" value="0" min="-1" max="1" step="0.01">
+        <div class="control">
+          <label for="contrast">Contrast</label>
+          <div class="slider">
+            <input type="range" id="contrast" value="0" min="-1" max="1" step="0.01">
+          </div>
+        </div>
 
-        <label for="saturation">Saturation</label>
-        <input type="range" id="saturation" value="0" min="-1" max="1" step="0.01">
+        <div class="control">
+          <label for="saturation">Saturation</label>
+          <div class="slider">
+            <input type="range" id="saturation" value="0" min="-1" max="1" step="0.01">
+          </div>
+        </div>
 
-        <label for="hue-value">Hue</label>
-        <input type="range" id="hue" value="0" min="-2" max="2" step="0.01">
+        <div class="control">
+          <label for="vibrance">Vibrance</label>
+          <div class="slider">
+            <input type="range" id="vibrance" value="0" min="-1" max="1" step="0.01">
+          </div>
+        </div>
+
+        <div class="control">
+          <label for="hue-value">Hue Rotate</label>
+          <div class="slider">
+            <input type="range" id="hue" value="0" min="-2" max="2" step="0.01">
+          </div>
+        </div>
+
+        <div class="control">
+          <label for="red">Red</label>
+          <div class="slider">
+            <input type="range" id="red" value="1" min="0.01" max="2.2" step="0.01">
+          </div>
+        </div>
+
+        <div class="control">
+          <label for="green">Green</label>
+          <div class="slider">
+            <input type="range" id="green" value="1" min="0.01" max="2.2" step="0.01">
+          </div>
+        </div>
+
+        <div class="control">
+          <label for="blue">Blue</label>
+          <div class="slider">
+            <input type="range" id="blue" value="1" min="0.01" max="2.2" step="0.01">
+          </div>
+        </div>
 
       </div>
 
     </div>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/451/fabric.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/460/fabric.min.js"></script>
 
   <script>
     const canvas = new fabric.Canvas("c");
@@ -96,9 +119,11 @@
       // Create and register the filters in `filters` object
       const filters = {
         brightness: new fabric.Image.filters.Brightness(),
-        saturation: new fabric.Image.filters.Saturation(),
         contrast: new fabric.Image.filters.Contrast(),
+        saturation: new fabric.Image.filters.Saturation(),
+        vibrance: new fabric.Image.filters.Vibrance(),
         hue: new fabric.Image.filters.HueRotation(),
+        gamma: new fabric.Image.filters.Gamma(),
       }
 
       // - Brightness
@@ -140,6 +165,45 @@
         // Apply the changes
         image.applyFilters();
         // Display the result
+        canvas.renderAll();
+      }
+
+      // - Vibrance
+      // Attach the filter to the image
+      image.filters.push(filters.vibrance);
+      const vibranceInput = document.querySelector("#vibrance")
+      vibranceInput.oninput = () => {
+        const value = parseFloat(vibranceInput.value);
+        // Edit the filter value
+        filters.vibrance.vibrance = value;
+        // Apply the changes
+        image.applyFilters();
+        // Display the result
+        canvas.renderAll();
+      }
+
+      // - Gamma
+      // Attach the filter to the image
+      image.filters.push(filters.gamma);
+      const redInput = document.querySelector("#red")
+      const greenInput = document.querySelector("#green")
+      const blueInput = document.querySelector("#blue")
+
+      redInput.oninput = () => {
+        filters.gamma.gamma = [parseFloat(redInput.value), parseFloat(greenInput.value), parseFloat(blueInput.value)];
+        image.applyFilters();
+        canvas.renderAll();
+      }
+
+      greenInput.oninput = () => {
+        filters.gamma.gamma = [parseFloat(redInput.value), parseFloat(greenInput.value), parseFloat(blueInput.value)];
+        image.applyFilters();
+        canvas.renderAll();
+      }
+
+      blueInput.oninput = () => {
+        filters.gamma.gamma = [parseFloat(redInput.value), parseFloat(greenInput.value), parseFloat(blueInput.value)];
+        image.applyFilters();
         canvas.renderAll();
       }
 
