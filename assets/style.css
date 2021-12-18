@@ -60,6 +60,10 @@ margin-bottom: 15px;
   border: none;
 }
 
+#fileInput{
+  display: none;
+}
+
 /* --- range sliders --- */
 
 input[type=range] {

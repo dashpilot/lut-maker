@@ -18,17 +18,7 @@
 <body>
 
   <div class="row no-gutters h-100">
-    <div class="col-md-9 h-100">
-      <div class="pad">
-        <canvas id="c" width="800" height="450"></canvas>
 
-        <div id="exports">
-          <canvas id="hald-canvas" width="125" height="125"></canvas>
-          <div id="placeholder"></div>
-          <canvas id="canvas-export" width="125" height="125"></canvas>
-        </div>
-      </div>
-    </div>
     <div class="col-md-3 h-100 controls">
 
       <div class="pad">
@@ -89,10 +79,27 @@
           </div>
         </div>
 
-        <button class="btn btn-outline-secondary w-100 mt-2" id="export">Save</button>
+        <button class="btn btn-outline-secondary w-100 mt-2" id="export">Export LUT</button>
 
       </div>
 
+    </div>
+
+    <div class="col-md-9 h-100">
+      <div class="pad">
+        <canvas id="c" width="800" height="450"></canvas>
+
+        <input type="file" id="fileInput" accept="image/*">
+        <button class="btn btn-outline-secondary" id="choose-image">Replace Image</button>
+
+
+        <div id="exports">
+          <canvas id="hald-canvas" width="125" height="125"></canvas>
+          <div id="placeholder"></div>
+          <canvas id="canvas-export" width="125" height="125"></canvas>
+        </div>
+
+      </div>
     </div>
   </div>
 
@@ -101,7 +108,7 @@
   <script src="js/script.js"></script>
 
   <script>
-    const canvas = new fabric.Canvas("c");
+    window.canvas = new fabric.Canvas("c");
     const haldCanvas = new fabric.Canvas("hald-canvas");
     const filters = {};
 
@@ -118,13 +125,13 @@
       */
 
       // load the image
-      const img = new Image();
+      var img = new Image();
       img.crossOrigin = "";
       await new Promise(res => {
         img.onload = res;
         img.src = `img/preview-image.jpg`;
       });
-      const image = new fabric.Image(img).scaleToWidth(800, false);
+      window.image = new fabric.Image(img).scaleToWidth(800, false);
       canvas.add(image)
 
       // Create and register the filters in `filters` object
@@ -274,10 +281,52 @@
         }, {
           crossOrigin: 'anonymous'
         });
+
+
       };
-
-
     }
+
+    document.getElementById('fileInput').addEventListener('change', function(e) {
+
+      var width = 1600;
+      var imgUpload = new Image();
+      imgUpload.onload = function() {
+        var canvas = document.createElement('canvas'),
+          ctx = canvas.getContext("2d"),
+          oc = document.createElement('canvas'),
+          octx = oc.getContext('2d');
+        canvas.width = width; // destination canvas size
+        canvas.height = canvas.width * imgUpload.height / imgUpload.width;
+        var cur = {
+          width: Math.floor(imgUpload.width * 0.5),
+          height: Math.floor(imgUpload.height * 0.5)
+        }
+        oc.width = cur.width;
+        oc.height = cur.height;
+        octx.drawImage(imgUpload, 0, 0, cur.width, cur.height);
+        while (cur.width * 0.5 > width) {
+          cur = {
+            width: Math.floor(cur.width * 0.5),
+            height: Math.floor(cur.height * 0.5)
+          };
+          octx.drawImage(oc, 0, 0, cur.width * 2, cur.height * 2, 0, 0, cur.width, cur.height);
+        }
+        ctx.drawImage(oc, 0, 0, cur.width, cur.height, 0, 0, canvas.width, canvas.height);
+        var base64Image = canvas.toDataURL('image/jpeg')
+        // console.log(base64Image);
+
+        window.image.setSrc(base64Image, function() {
+          window.canvas.renderAll();
+        });
+
+
+      }
+      imgUpload.src = URL.createObjectURL(e.target.files[0]);
+    });
+
+    document.getElementById('choose-image').addEventListener('click', function(e) {
+      document.getElementById('fileInput').click();
+    });
   </script>
 
 </body>
