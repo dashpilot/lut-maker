@@ -67,8 +67,8 @@ class Hald {
     }
 
     function generateCube() {
-      let hald = document.getElementById('hald');
-      let hald2 = document.getElementById('export');
+      let hald = document.getElementById('image-export');
+      let hald2 = document.getElementById('canvas-export');
       let haldData2 = hald2.getContext("2d");
 
       haldData2.drawImage(hald, 0, 0);

@@ -21,6 +21,12 @@
     <div class="col-md-9 h-100">
       <div class="pad">
         <canvas id="c" width="800" height="450"></canvas>
+
+        <div id="exports">
+          <canvas id="hald-canvas" width="125" height="125"></canvas>
+          <div id="placeholder"></div>
+          <canvas id="canvas-export" width="125" height="125"></canvas>
+        </div>
       </div>
     </div>
     <div class="col-md-3 h-100 controls">
@@ -28,7 +34,7 @@
       <div class="pad">
 
         <div class="control">
-          <label for="brightness">Brightness</label>
+          <label for="brightness">Exposure</label>
           <div class="slider">
             <input type="range" id="brightness" value="0" min="-1" max="1" step="0.01">
           </div>
@@ -83,15 +89,20 @@
           </div>
         </div>
 
+        <button class="btn btn-outline-secondary w-100 mt-2" id="export">Save</button>
+
       </div>
 
     </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/460/fabric.min.js"></script>
+  <script src="js/lut-export.js"></script>
+  <script src="js/script.js"></script>
 
   <script>
     const canvas = new fabric.Canvas("c");
+    const haldCanvas = new fabric.Canvas("hald-canvas");
     const filters = {};
 
     init()
@@ -220,6 +231,54 @@
         // Display the result
         canvas.renderAll();
       }
+
+      /*--- Export LUT ---*/
+
+      // click to add image
+      var exportButton = document.getElementById('export');
+      exportButton.addEventListener('click', () => {
+        setTimeout(function() {
+          addImg_d()
+        }, 100);
+      });
+
+      var img_url = "img/Neutral_25.png"
+
+      // add image to fabriccanvas
+      function addImg_d() {
+        fabric.Image.fromURL(img_url, function(hald) {
+
+          //new fabric.Image.filters.Brightness(brightness.value)
+          hald.filters.push(filters.brightness);
+          hald.filters.push(filters.contrast);
+          hald.filters.push(filters.saturation);
+          hald.filters.push(filters.vibrance);
+          hald.filters.push(filters.hue);
+          hald.filters.push(filters.red);
+          hald.filters.push(filters.green);
+          hald.filters.push(filters.blue);
+
+          hald.applyFilters();
+          hald.scale(1);
+          haldCanvas.add(hald);
+
+          setTimeout(function() {
+
+            var pngURL = haldCanvas.toDataURL();
+            document.querySelector('#placeholder').innerHTML = `<img id="image-export" src="${pngURL}"/>`;
+
+            setTimeout(function() {
+              generateCube();
+            }, 200);
+
+          }, 100)
+
+        }, {
+          crossOrigin: 'anonymous'
+        });
+      };
+
+
     }
   </script>
 

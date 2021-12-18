@@ -12,6 +12,10 @@ body {
   height: 450px;
 }
 
+#exports{
+  opacity: 0;
+}
+
 label {
   display: block;
 }
